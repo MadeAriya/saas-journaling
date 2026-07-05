@@ -1,26 +1,189 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-parchment: #fef3c7;
+  --color-parchment-dark: #fde68a;
+  --color-ink: #1c1917;
+  --color-amber-glow: #d97706;
+  --color-amber-soft: #b45309;
+  --color-surface: #18181b;
+  --color-surface-light: #27272a;
+  --color-muted: #71717a;
+  --color-success: #22c55e;
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-lora);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #09090b;
+  --foreground: #fafafa;
 }
 
+/* ===== BASE STYLES ===== */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* ===== TEXTAREA STYLES ===== */
+textarea::placeholder {
+  color: #52525b;
+  font-style: italic;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+/* ===== TOAST ANIMATION ===== */
+@keyframes toast-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
+.toast-enter {
+  animation: toast-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-exit {
+  animation: toast-out 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ===== PAGE FLIP ANIMATION ===== */
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: rotateY(-8deg) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+.page-flip {
+  animation: page-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: left center;
+}
+
+/* ===== FADE IN ===== */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ===== SUBTLE PULSE FOR SUBMIT BUTTON ===== */
+@keyframes subtle-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px 2px rgba(217, 119, 6, 0.15);
+  }
+}
+
+.btn-glow {
+  animation: subtle-glow 3s ease-in-out infinite;
+}
+
+/* ===== BOOK PAGE STYLES ===== */
+.book-page {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 30%, #fef3c7 70%, #fde68a 100%);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset -2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.book-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      rgba(180, 83, 9, 0.06) 31px,
+      rgba(180, 83, 9, 0.06) 32px
+    );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ===== ENTRY CONTENT SEPARATOR ===== */
+.entry-content hr {
+  border: none;
+  border-top: 1px solid rgba(180, 83, 9, 0.2);
+  margin: 1.5rem 0;
+}
+
+/* ===== SPINNER ===== */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(217, 119, 6, 0.2);
+  border-top-color: #d97706;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* ===== WRITING CURSOR BLINK ===== */
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
